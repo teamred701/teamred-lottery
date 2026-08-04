@@ -28,7 +28,9 @@
       "Bash(sips -Z 180 icon-source.png --out apple-touch-icon.png)",
       "Bash(sips -Z 192 icon-source.png --out icon-192.png)",
       "Bash(sips -Z 512 icon-source.png --out icon-512.png)",
-      "Bash(git commit -m 'ホーム画面アイコン\\(apple-touch-icon / Web App Manifest\\)を追加 *)"
+      "Bash(git commit -m 'ホーム画面アイコン\\(apple-touch-icon / Web App Manifest\\)を追加 *)",
+      "Bash(git push *)",
+      "Bash(git commit -m '賞名を賞品名に変更、サウナ・ライトメンバーを削除し各種枠5種を追加 *)"
     ]
   }
 }

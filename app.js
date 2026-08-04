@@ -991,8 +991,14 @@ function getPrizePriority(prize) {
         'CNP': 11,
         'CNPRED': 12,
         'カケラNFT': 13,
-        '抽選': 14,
-        'その他': 15
+        'KAKERANFT': 13,
+        'TEAM REDトークンホルダー枠': 14,
+        'モバイル枠': 15,
+        'CNP REDホルダー枠': 16,
+        'CNP REDコンプリート枠': 17,
+        '応援ギフト枠': 18,
+        '抽選': 19,
+        'その他': 20
     };
     
     return priorities[prize] || 99; // 未定義の賞は最下位
@@ -1111,7 +1117,7 @@ function downloadCSV(results) {
     }
     
     // CSV形式に変換（UTF-8 BOM付き）
-    const csvContent = '\ufeff当選日時,イベント名,賞名,当選者名\n' + 
+    const csvContent = '\ufeff当選日時,イベント名,賞品名,当選者名\n' + 
         appState.winnerHistory.map(record => {
             return `"${record.displayTime}","${record.eventName}","${record.prize}","${record.name}"`;
         }).join('\n');
