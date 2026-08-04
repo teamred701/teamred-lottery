@@ -7,7 +7,28 @@
       "Bash(git init *)",
       "Bash(git config *)",
       "Bash(git add *)",
-      "Bash(git commit -m '抽選会アプリ 初回コミット *)"
+      "Bash(git commit -m '抽選会アプリ 初回コミット *)",
+      "Bash(gh repo *)",
+      "Bash(gh api *)",
+      "Bash(ls -la ~/Desktop/TEAMRED画像/ 2>/dev/null | head -30; echo ---; find ~/Desktop ~/Downloads -maxdepth 2 -iname \"*.png\" -o -maxdepth 2 -iname \"*.jpg\" -o -maxdepth 2 -iname \"*.jpeg\" 2>/dev/null | head -40)",
+      "Bash(grep -iE \"\\\\.\\(png|jpe?g\\)$\")",
+      "Bash(cp \"/Users/usay/Desktop/TEAMRED画像/ChatGPT Image 2026年8月3日 21_36_19.png\" /private/tmp/claude-501/-Users-usay-Documents-Dev-------/7ca6bbcf-c0fd-425e-bcd4-b8d8c62098c1/scratchpad/cand1.png)",
+      "Bash(cp \"/Users/usay/Desktop/TEAMRED画像/ElevenLabs_image_nano-banana_炎の数を７つにして_2026-03-29T08_08_07.png\" /private/tmp/claude-501/-Users-usay-Documents-Dev-------/7ca6bbcf-c0fd-425e-bcd4-b8d8c62098c1/scratchpad/cand2.png)",
+      "Bash(sips -Z 350 ~/Desktop/TEAMRED画像/IMG_8786.PNG --out /private/tmp/claude-501/-Users-usay-Documents-Dev-------/7ca6bbcf-c0fd-425e-bcd4-b8d8c62098c1/scratchpad/a1.png)",
+      "Bash(sips -Z 350 ~/Desktop/TEAMRED画像/IMG_8980.PNG --out /private/tmp/claude-501/-Users-usay-Documents-Dev-------/7ca6bbcf-c0fd-425e-bcd4-b8d8c62098c1/scratchpad/a2.png)",
+      "Bash(sips -Z 350 ~/Desktop/TEAMRED画像/FF835E7D-8014-41AB-9F99-D2495BB40933.PNG --out /private/tmp/claude-501/-Users-usay-Documents-Dev-------/7ca6bbcf-c0fd-425e-bcd4-b8d8c62098c1/scratchpad/a3.png)",
+      "Bash(sips -Z 350 ~/Desktop/TEAMRED画像/IMG_9058.PNG --out /private/tmp/claude-501/-Users-usay-Documents-Dev-------/7ca6bbcf-c0fd-425e-bcd4-b8d8c62098c1/scratchpad/a4.png)",
+      "Read(//Users/usay/Downloads/**)",
+      "Bash(sips -s format png -Z 400 ~/Downloads/IMG_5196.HEIC --out /private/tmp/claude-501/-Users-usay-Documents-Dev-------/7ca6bbcf-c0fd-425e-bcd4-b8d8c62098c1/scratchpad/h1.png)",
+      "Bash(sips -s format png -Z 400 ~/Downloads/IMG_5197.HEIC --out /private/tmp/claude-501/-Users-usay-Documents-Dev-------/7ca6bbcf-c0fd-425e-bcd4-b8d8c62098c1/scratchpad/h2.png)",
+      "Bash(osascript -e 'set png_data to the clipboard as «class PNGf»' -e 'set fp to open for access POSIX file \"/private/tmp/claude-501/-Users-usay-Documents-Dev-------/7ca6bbcf-c0fd-425e-bcd4-b8d8c62098c1/scratchpad/clip.png\" with write permission' -e 'write png_data to fp' -e 'close access fp')",
+      "Bash(sips -Z 350 '/Users/usay/Desktop/大抽選会/ChatGPT Image 2026年7月26日 09_00_51.png' --out /private/tmp/claude-501/-Users-usay-Documents-Dev-------/7ca6bbcf-c0fd-425e-bcd4-b8d8c62098c1/scratchpad/d1.png)",
+      "Bash(sips -Z 350 '/Users/usay/Desktop/大抽選会/ChatGPT Image 2026年7月24日 12_37_03.png' --out /private/tmp/claude-501/-Users-usay-Documents-Dev-------/7ca6bbcf-c0fd-425e-bcd4-b8d8c62098c1/scratchpad/d2.png)",
+      "Bash(cp ~/Desktop/TEAMRED画像/IMG_8786.PNG icon-source.png)",
+      "Bash(sips -Z 180 icon-source.png --out apple-touch-icon.png)",
+      "Bash(sips -Z 192 icon-source.png --out icon-192.png)",
+      "Bash(sips -Z 512 icon-source.png --out icon-512.png)",
+      "Bash(git commit -m 'ホーム画面アイコン\\(apple-touch-icon / Web App Manifest\\)を追加 *)"
     ]
   }
 }
