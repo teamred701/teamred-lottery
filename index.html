@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEAM RED - プレミアム抽選</title>
+    <link rel="icon" type="image/png" href="./IMG_7440.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    
+    <div class="rehearsal-banner" id="rehearsal-banner">
+        ⚠️ リハーサルモード中 — 通知・記録は送信されません
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">
+                <img src="./IMG_7440.png" alt="TEAM RED" class="logo-icon">
+                TEAM RED
+            </h1>
+            <p class="tagline">プレミアムな抽選体験をお届けします</p>
+        </div>
+    </header>
+
+    <div class="current-time-display" id="current-time-display">
+        <div class="time-content">
+            <span class="time-label">現在時刻</span>
+            <span class="time-value" id="current-time"></span>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="cards-container">
+                <div class="card participants-card">
+                    <div class="card-header">
+                        <h2>参加者リスト</h2>
+                        <div class="tab-buttons">
+                            <button class="tab-button active" data-tab="single" aria-label="1名ずつ追加">
+                                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2 1h-1.1a4.2 4.2 0 0 1-1.8 0H6a4 4 0 0 0-4 4v1h1v-1a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3v1h1v-1a4 4 0 0 0-4-4z"/>
+                                </svg>
+                                <span class="tab-text">
+                                    <strong>1名ずつ追加</strong>
+                                    <small>個別に参加者を入力</small>
+                                </span>
+                            </button>
+                            <button class="tab-button" data-tab="bulk" aria-label="まとめて追加">
+                                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M1 3.5h14a.5.5 0 0 1 0 1H1a.5.5 0 0 1 0-1zm0 3h14a.5.5 0 0 1 0 1H1a.5.5 0 0 1 0-1zm0 3h14a.5.5 0 0 1 0 1H1a.5.5 0 0 1 0-1zm0 3h14a.5.5 0 0 1 0 1H1a.5.5 0 0 1 0-1z"/>
+                                </svg>
+                                <span class="tab-text">
+                                    <strong>まとめて追加</strong>
+                                    <small>複数名を一括で入力</small>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="error-message" id="participants-error"></div>
+
+                    <div class="tab-content active" id="single-tab">
+                        <div class="input-group">
+                            <label for="participant-name" class="input-label">名前 <span class="required">*</span></label>
+                            <input type="text" id="participant-name" class="input-field" placeholder="参加者の名前を入力" required aria-describedby="name-error">
+                            <div class="error-text" id="name-error"></div>
+                        </div>
+                        <div class="input-group">
+                            <label for="participant-weight" class="input-label">口数</label>
+                            <input type="number" id="participant-weight" class="input-field" min="1" value="1" aria-describedby="weight-error">
+                            <div class="error-text" id="weight-error"></div>
+                        </div>
+                        <button class="btn btn-primary add-single-btn" id="add-participant" aria-label="参加者を追加">
+                            <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 2a.5.5 0 0 1 .5.5v5H14a.5.5 0 0 1 0 1H8.5v5a.5.5 0 0 1-1 0v-5H2a.5.5 0 0 1 0-1h5.5v-5A.5.5 0 0 1 8 2z"/>
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2 1h-1.1a4.2 4.2 0 0 1-1.8 0H6a4 4 0 0 0-4 4v1h1v-1a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3v1h1v-1a4 4 0 0 0-4-4z"/>
+                            </svg>
+                            <span class="button-text">
+                                <strong>参加者を追加</strong>
+                                <small>1名を個別に追加</small>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="tab-content" id="bulk-tab">
+                        <div class="input-group">
+                            <label for="bulk-input" class="input-label">参加者一覧</label>
+                            <textarea id="bulk-input" class="textarea-field" rows="6" placeholder="例:&#10;佐藤花子,3&#10;山田次郎 5&#10;鈴木一郎"></textarea>
+                            <div class="help-text">1行に1名。カンマまたはスペースで口数を指定（省略時は1口）</div>
+                        </div>
+                        <button class="btn btn-primary add-bulk-btn" id="add-bulk" aria-label="まとめて追加">
+                            <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 2a.5.5 0 0 1 .5.5v5H14a.5.5 0 0 1 0 1H8.5v5a.5.5 0 0 1-1 0v-5H2a.5.5 0 0 1 0-1h5.5v-5A.5.5 0 0 1 8 2z"/>
+                                <path d="M1 3.5h14a.5.5 0 0 1 0 1H1a.5.5 0 0 1 0-1zm0 3h14a.5.5 0 0 1 0 1H1a.5.5 0 0 1 0-1zm0 3h14a.5.5 0 0 1 0 1H1a.5.5 0 0 1 0-1z"/>
+                            </svg>
+                            <span class="button-text">
+                                <strong>まとめて追加</strong>
+                                <small>複数名を一括で追加</small>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="participants-summary">
+                        <span id="participants-count">参加者数: 0名</span>
+                        <span id="total-weight">総口数: 0口</span>
+                        <button class="btn btn-small btn-primary set-all-one-btn" id="set-all-one" aria-label="全参加者を1口に設定">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2 1h-1.1a4.2 4.2 0 0 1-1.8 0H6a4 4 0 0 0-4 4v1a1 1 0 0 0 2 0v-1a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1a1 1 0 1 0 2 0v-1a4 4 0 0 0-4-4z"/>
+                            </svg>
+                            <span class="button-text">
+                                <strong>全員1口に統一</strong>
+                                <small>口数をリセット</small>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="participants-file-actions">
+                        <button class="btn btn-small btn-secondary" id="export-participants" aria-label="参加者リストをCSVでエクスポート">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                            </svg>
+                            参加者リストを保存
+                        </button>
+                        <button class="btn btn-small btn-primary" id="import-participants" aria-label="参加者リストをCSVからインポート">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                            </svg>
+                            参加者リストを読込
+                        </button>
+                        <input type="file" id="import-file-input" accept=".csv" style="display: none;">
+                    </div>
+
+                    <div class="participants-list">
+                        <div class="table-header">
+                            <span>名前</span>
+                            <span>口数</span>
+                            <span>操作</span>
+                        </div>
+                        <div id="participants-table" class="table-body">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card lottery-card">
+                    <div class="card-header">
+                        <h2>抽選設定</h2>
+                    </div>
+
+                    <div class="error-message" id="lottery-error"></div>
+
+                    <div class="input-group">
+                        <label for="event-name" class="input-label">イベント名 <span class="required">*</span></label>
+                        <div class="event-name-container">
+                            <select id="event-name" class="select-field" required aria-describedby="event-error">
+                                <option value="">イベントを選択</option>
+                                <option value="TEAM RED" selected>TEAM RED</option>
+                                <option value="SPORTS of HEART">SPORTS of HEART</option>
+                                <option value="赤犬赤猫">赤犬赤猫</option>
+                                <option value="ゆるトークン">ゆるトークン</option>
+                                <option value="セブDAOの日">セブDAOの日</option>
+                                <option value="Scent Japan DAO">Scent Japan DAO</option>
+                                <option value="CNPRED">CNPRED</option>
+                                <option value="LEVELUP">LEVELUP</option>
+                                <option value="複業アカデミー">複業アカデミー</option>
+                            </select>
+                            <select id="event-month" class="select-field" required aria-describedby="event-error">
+                                <option value="">月を選択</option>
+                                <option value="1">1月</option>
+                                <option value="2">2月</option>
+                                <option value="3">3月</option>
+                                <option value="4">4月</option>
+                                <option value="5">5月</option>
+                                <option value="6">6月</option>
+                                <option value="7">7月</option>
+                                <option value="8">8月</option>
+                                <option value="9">9月</option>
+                                <option value="10">10月</option>
+                                <option value="11">11月</option>
+                                <option value="12">12月</option>
+                            </select>
+                            <span class="event-name-suffix">抽選会</span>
+                        </div>
+                        <div class="error-text" id="event-error"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="prize-name" class="input-label">賞名</label>
+                        <select id="prize-name" class="select-field" required>
+                            <option value="抽選" selected>抽選</option>
+                            <option value="1等">1等</option>
+                            <option value="2等">2等</option>
+                            <option value="3等">3等</option>
+                            <option value="4等">4等</option>
+                            <option value="5等">5等</option>
+                            <option value="6等">6等</option>
+                            <option value="7等">7等</option>
+                            <option value="8等">8等</option>
+                            <option value="9等">9等</option>
+                            <option value="リアタイ賞">リアタイ賞</option>
+                            <option value="CNP">CNP</option>
+                            <option value="CNPRED">CNPRED</option>
+                            <option value="KAKERANFT">KAKERANFT</option>
+                            <option value="サウナ">サウナ</option>
+                            <option value="ライトメンバー">ライトメンバー</option>
+                            <option value="その他">その他</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="winner-count" class="input-label">当選者数</label>
+                        <div class="input-with-suffix">
+                            <input type="number" id="winner-count" class="input-field" min="1" value="1" aria-describedby="count-error">
+                            <span class="input-suffix" id="winner-count-suffix">/ 0名中</span>
+                        </div>
+                        <div class="error-text" id="count-error"></div>
+                    </div>
+
+
+                    <div class="input-group">
+                        <label for="excluded-participants" class="input-label">除外対象者</label>
+                        <textarea id="excluded-participants" class="textarea-field excluded-textarea" rows="3" placeholder="抽選から除外したい参加者の名前を1行に1名ずつ入力&#10;例:&#10;佐藤花子&#10;山田次郎"></textarea>
+                        <div class="help-text">ここに入力された参加者は抽選対象から除外されます（口数は保持されます）</div>
+                        <div class="exclusion-status" id="manual-exclusion-status">
+                            <span class="status-label">手動除外:</span>
+                            <span class="status-count" id="manual-excluded-count">0名</span>
+                            <span class="status-names" id="manual-excluded-names"></span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="lottery-time" class="input-label">抽選時間</label>
+                        <select id="lottery-time" class="input-field">
+                            <option value="3">3秒</option>
+                            <option value="5" selected>5秒</option>
+                            <option value="10">10秒</option>
+                            <option value="15">15秒</option>
+                            <option value="30">30秒</option>
+                            <option value="60">60秒</option>
+                        </select>
+                    </div>
+
+
+                    <div class="input-group">
+                        <label for="duplicate-setting" class="input-label">重複当選設定</label>
+                        <select id="duplicate-setting" class="select-field">
+                            <option value="off" selected>重複当選OFF（1人1回まで）</option>
+                            <option value="on">重複当選ON（何度でも当選可能）</option>
+                        </select>
+                        <div class="help-text">OFFの場合、既に当選歴のある参加者は抽選対象から除外されます</div>
+                    </div>
+
+                    <div class="input-group spreadsheet-settings">
+                        <label class="input-label">Discord通知</label>
+                        <div class="toggle-container">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="discord-enabled">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label" id="discord-status">OFF</span>
+                        </div>
+                        <div class="help-text">当選結果を自動でDiscordに通知します</div>
+                        <div class="spreadsheet-status-message" id="discord-status-message"></div>
+                    </div>
+
+                    <!-- Notion記録ステータス表示（設定は非表示、自動記録） -->
+                    <div class="spreadsheet-status-message" id="notion-status-message"></div>
+
+                    <div class="input-group rehearsal-settings">
+                        <label class="input-label">リハーサルモード</label>
+                        <div class="toggle-container">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="rehearsal-enabled">
+                                <span class="toggle-slider rehearsal-slider"></span>
+                            </label>
+                            <span class="toggle-label" id="rehearsal-status">OFF</span>
+                        </div>
+                        <div class="help-text">ONにすると Discord・Notion・スプレッドシートへの通知と当選履歴の記録をスキップします（本番前の動作確認用）</div>
+                    </div>
+
+                    <button class="btn btn-primary lottery-start" id="start-lottery" disabled aria-label="抽選を開始">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="m6.271 5.055 3.902 2.45a.5.5 0 0 1 0 .99l-3.902 2.45A.5.5 0 0 1 5.5 10.5v-4.9a.5.5 0 0 1 .771-.445z"/>
+                        </svg>
+                        抽選スタート
+                    </button>
+
+                    <div class="lottery-animation" id="lottery-animation">
+                        <div class="slot-display">
+                            <div class="current-name" id="current-name"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card results-card" id="results-card">
+                    <div class="card-header">
+                        <h2>🎊 当選者発表 🎊</h2>
+                    </div>
+
+                    <div class="lottery-results" id="lottery-results">
+                        <h3 class="results-title"></h3>
+                        <div class="winners-list" id="winners-list"></div>
+                        <div class="cancel-lottery-container">
+                            <button class="btn btn-cancel-lottery" id="cancel-lottery" aria-label="この抽選を取り消す">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                </svg>
+                                この抽選を取り消す
+                            </button>
+                        </div>
+                        <div class="results-actions">
+                            <button class="btn btn-secondary" id="copy-winners-detailed" aria-label="当選者詳細をコピー">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                                    <path d="M8 3a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h1z"/>
+                                </svg>
+                                当選者をコピー
+                            </button>
+                            <button class="btn btn-primary" id="generate-share-url" aria-label="共有URLを生成">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                    <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                                    <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+                                </svg>
+                                共有URLを生成
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions-container">
+                <button class="btn btn-secondary" id="reset-winners" aria-label="当選履歴をリセット">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                        <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                    </svg>
+                    当選履歴リセット
+                </button>
+                <button class="btn btn-danger" id="reset-all" aria-label="すべてリセット">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                    </svg>
+                    すべてリセット
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 TEAM RED</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

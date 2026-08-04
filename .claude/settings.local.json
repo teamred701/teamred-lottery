@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -rn -E \"ntn_[A-Za-z0-9]|secret_[A-Za-z0-9]{10,}|discord\\\\.com/api/webhooks/[0-9]|script\\\\.google\\\\.com/macros/s/AKfycb\" \"/Users/usay/Documents/Dev/抽選会アプリ\" --include=\"*.js\" --include=\"*.html\" --include=\"*.gs\")",
+      "Bash(command -v gh git netlify vercel wrangler)",
+      "Bash(gh auth *)",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit -m '抽選会アプリ 初回コミット *)"
+    ]
+  }
+}
