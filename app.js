@@ -992,7 +992,7 @@ function getPrizePriority(prize) {
         'CNPRED': 12,
         'カケラNFT': 13,
         'KAKERANFT': 13,
-        'TEAM REDトークンホルダー枠': 14,
+        'Premium特典枠': 14,
         'モバイル枠': 15,
         'CNP REDホルダー枠': 16,
         'CNP REDコンプリート枠': 17,
