@@ -292,7 +292,12 @@ function updateAvailableParticipantsDisplay() {
     }
     
     elements.winnerCountSuffix.textContent = `/ ${availableCount}名中`;
-    
+
+    // 重複当選ON時は参加者数を超える当選者数も指定できる
+    if (appState.allowDuplicateWinners) {
+        elements.winnerCountSuffix.textContent += '（重複可・上限なし）';
+    }
+
     // 詳細情報を追加
     if (excludedCount > 0 || appState.winners.size > 0) {
         elements.winnerCountSuffix.textContent += ` (全${totalCount}名)`;
@@ -599,8 +604,11 @@ function performLottery(pool, count) {
                     appState.winners.add(winner);
                 }
                 
-                // この抽選で重複しないよう、抽選プールから除外
-                drawPool.splice(j, 1);
+                // 重複当選OFFの場合のみ、同一回内で重複しないようプールから除外
+                // （ONの場合は同じ人が複数回当選できる）
+                if (!appState.allowDuplicateWinners) {
+                    drawPool.splice(j, 1);
+                }
                 break;
             }
         }
@@ -650,7 +658,7 @@ async function startLottery() {
         return;
     }
     
-    if (winnerCount > availableParticipants) {
+    if (!appState.allowDuplicateWinners && winnerCount > availableParticipants) {
         showError('lottery-error', `当選者数が利用可能な参加者数（${availableParticipants}名）を超えています。`);
         return;
     }
@@ -845,8 +853,11 @@ async function redrawWinner(winnerItem) {
         }
     }
 
-    // lastResults からも削除
-    appState.lastResults = appState.lastResults.filter(r => r.name !== declinedName);
+    // lastResults からも削除（重複当選時に複数枠持っている場合は1枠だけ削除）
+    const lastResultIndex = appState.lastResults.findIndex(r => r.name === declinedName);
+    if (lastResultIndex !== -1) {
+        appState.lastResults.splice(lastResultIndex, 1);
+    }
 
     // UIをローディング状態に
     const nameSpan = winnerItem.querySelector('.winner-name');
@@ -867,7 +878,8 @@ async function redrawWinner(winnerItem) {
         .filter(([name]) => {
             if (appState.excludedParticipants.has(name)) return false;
             if (currentRound.declinedNames.has(name)) return false;
-            if (currentWinnerNames.includes(name)) return false;
+            // 重複当選OFFの場合のみ、現在表示中の当選者を再抽選から除外
+            if (!appState.allowDuplicateWinners && currentWinnerNames.includes(name)) return false;
             if (!appState.allowDuplicateWinners && appState.winners.has(name)) return false;
             return true;
         })
@@ -1693,7 +1705,7 @@ function updateLotteryButtonState() {
     const hasValidEvent = !!eventInfo.eventName;
     const hasValidWinnerCount = winnerCount > 0;
     const hasAvailableParticipants = availableParticipants > 0;
-    const winnerCountNotExceedsAvailable = winnerCount <= availableParticipants;
+    const winnerCountNotExceedsAvailable = appState.allowDuplicateWinners || winnerCount <= availableParticipants;
     const notRunning = !appState.isLotteryRunning;
     
     
