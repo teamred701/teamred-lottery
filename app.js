@@ -2376,18 +2376,45 @@ async function testDiscordConnection() {
 function initDiscordSettings() {
     const enabledCheckbox = document.getElementById('discord-enabled');
     const statusLabel = document.getElementById('discord-status');
+    const urlContainer = document.getElementById('discord-url-container');
+    const urlInput = document.getElementById('discord-webhook-url');
+    const testBtn = document.getElementById('test-discord');
 
     if (!enabledCheckbox) return;
 
     enabledCheckbox.checked = appState.discordEnabled;
     statusLabel.textContent = appState.discordEnabled ? 'ON' : 'OFF';
 
+    // 保存されたURLを復元
+    if (urlInput && appState.discordWebhookUrl) {
+        urlInput.value = appState.discordWebhookUrl;
+    }
+    if (urlContainer) {
+        urlContainer.style.display = appState.discordEnabled ? 'flex' : 'none';
+    }
+
     // トグル変更時
     enabledCheckbox.addEventListener('change', function() {
         appState.discordEnabled = this.checked;
         statusLabel.textContent = this.checked ? 'ON' : 'OFF';
+        if (urlContainer) {
+            urlContainer.style.display = this.checked ? 'flex' : 'none';
+        }
         saveToStorage();
     });
+
+    // URL入力時
+    if (urlInput) {
+        urlInput.addEventListener('input', function() {
+            appState.discordWebhookUrl = this.value.trim();
+            saveToStorage();
+        });
+    }
+
+    // 接続テストボタン
+    if (testBtn) {
+        testBtn.addEventListener('click', testDiscordConnection);
+    }
 }
 
 /**
