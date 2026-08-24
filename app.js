@@ -1009,8 +1009,9 @@ function getPrizePriority(prize) {
         'CNP REDホルダー枠': 16,
         'CNP REDコンプリート枠': 17,
         '応援ギフト枠': 18,
-        '抽選': 19,
-        'その他': 20
+        'RWA': 19,
+        '抽選': 20,
+        'その他': 21
     };
     
     return priorities[prize] || 99; // 未定義の賞は最下位
