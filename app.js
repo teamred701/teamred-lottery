@@ -1010,8 +1010,9 @@ function getPrizePriority(prize) {
         'CNP REDコンプリート枠': 17,
         '応援ギフト枠': 18,
         'RWA': 19,
-        '抽選': 20,
-        'その他': 21
+        'もみじとかえでのカケラ🎁': 20,
+        '抽選': 21,
+        'その他': 22
     };
     
     return priorities[prize] || 99; // 未定義の賞は最下位
