@@ -276,6 +276,13 @@
                             <span class="toggle-label" id="discord-status">OFF</span>
                         </div>
                         <div class="help-text">当選結果を自動でDiscordに通知します</div>
+                        <details class="discord-advanced" id="discord-advanced" style="display: none;">
+                            <summary>詳細設定</summary>
+                            <div class="spreadsheet-url-container">
+                                <input type="password" id="discord-webhook-url" class="input-field" autocomplete="off" placeholder="Discord Webhook URL を貼り付け">
+                                <button type="button" class="btn btn-secondary" id="test-discord">接続テスト</button>
+                            </div>
+                        </details>
                         <div class="spreadsheet-status-message" id="discord-status-message"></div>
                     </div>
 

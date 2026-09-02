@@ -587,6 +587,30 @@ body::before {
     border: 2px solid #e9ecef;
 }
 
+.discord-advanced {
+    margin-top: 8px;
+}
+
+.discord-advanced summary {
+    font-size: 0.75rem;
+    color: #adb5bd;
+    cursor: pointer;
+    user-select: none;
+    list-style-position: inside;
+}
+
+.discord-advanced summary:hover {
+    color: #6c757d;
+}
+
+.discord-advanced[open] {
+    margin-bottom: 6px;
+}
+
+.discord-advanced .spreadsheet-url-container {
+    margin-top: 10px;
+}
+
 .spreadsheet-url-container {
     display: flex;
     flex-direction: column;

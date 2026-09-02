@@ -2423,7 +2423,7 @@ async function testDiscordConnection() {
 function initDiscordSettings() {
     const enabledCheckbox = document.getElementById('discord-enabled');
     const statusLabel = document.getElementById('discord-status');
-    const urlContainer = document.getElementById('discord-url-container');
+    const advancedDetails = document.getElementById('discord-advanced');
     const urlInput = document.getElementById('discord-webhook-url');
     const testBtn = document.getElementById('test-discord');
 
@@ -2436,16 +2436,16 @@ function initDiscordSettings() {
     if (urlInput && appState.discordWebhookUrl) {
         urlInput.value = appState.discordWebhookUrl;
     }
-    if (urlContainer) {
-        urlContainer.style.display = appState.discordEnabled ? 'flex' : 'none';
+    if (advancedDetails) {
+        advancedDetails.style.display = appState.discordEnabled ? 'block' : 'none';
     }
 
     // トグル変更時
     enabledCheckbox.addEventListener('change', function() {
         appState.discordEnabled = this.checked;
         statusLabel.textContent = this.checked ? 'ON' : 'OFF';
-        if (urlContainer) {
-            urlContainer.style.display = this.checked ? 'flex' : 'none';
+        if (advancedDetails) {
+            advancedDetails.style.display = this.checked ? 'block' : 'none';
         }
         saveToStorage();
     });
