@@ -442,6 +442,38 @@ function saveToStorage() {
     } catch (e) {
         console.warn('ローカルストレージへの保存に失敗しました:', e);
     }
+
+    // Discord通知設定は別キーにもバックアップ（全データリセットで消えないように）
+    try {
+        if (appState.discordWebhookUrl) {
+            localStorage.setItem('lottery-discord-config', JSON.stringify({
+                discordEnabled: appState.discordEnabled,
+                discordWebhookUrl: appState.discordWebhookUrl
+            }));
+        }
+    } catch (e) {
+        console.warn('Discord設定のバックアップ保存に失敗しました:', e);
+    }
+}
+
+/**
+ * Discord通知設定のバックアップを復元（メインデータにURLが無い場合のみ）
+ */
+function restoreDiscordConfigBackup() {
+    if (appState.discordWebhookUrl) return;
+    try {
+        const saved = localStorage.getItem('lottery-discord-config');
+        if (!saved) return;
+        const cfg = JSON.parse(saved);
+        if (cfg.discordWebhookUrl) {
+            appState.discordWebhookUrl = cfg.discordWebhookUrl;
+            if (typeof cfg.discordEnabled === 'boolean') {
+                appState.discordEnabled = cfg.discordEnabled;
+            }
+        }
+    } catch (e) {
+        console.warn('Discord設定のバックアップ復元に失敗しました:', e);
+    }
 }
 
 /**
@@ -1808,6 +1840,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ローカルストレージから復元
     loadFromStorage();
+    restoreDiscordConfigBackup();
 
     // 月が設定されていない場合は現在の月を設定
     if (!elements.eventMonth.value) {
